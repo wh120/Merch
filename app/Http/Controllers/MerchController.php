@@ -18,7 +18,7 @@ class MerchController extends Controller
      */
     public function index()
     {
-        $merchs = Merch::all();       
+        $merchs = Merch::all();
         $merchs = DB::select('select * from merches ');
         return view('Merch.index',['merchs'=>$merchs]);
     }
@@ -43,15 +43,15 @@ class MerchController extends Controller
     public function store(Request $request)
     {
 
-        
-        
+
+
         RegisterController::create(
                 ['name' => $request->Full_Name,
                 'email' => $request->Email,
                 'password' => $request->Password]);
 
         $merch = new Merch;
-        
+
         $merch->Full_Name = $request->Full_Name;
         $merch->Company_Name = $request->Company_Name;
         $merch->Email = $request->Email;
@@ -59,15 +59,15 @@ class MerchController extends Controller
         $merch->Type_of_goods = $request->Type_of_goods;
         $merch->Space_Required = $request->Space_Required;
         $merch->image = $request->image;
-        
-        
+
+
         $imageName = $request->Full_Name . '.' .request()->image->getClientOriginalExtension();
         request()->image->move(public_path('images'), $imageName);
-        
+
 
         $merch->save();
-        
-        
+
+
         return redirect()->route('Product.index');
     }
 
