@@ -102,9 +102,9 @@
                                                     <h4 style="color: rgb(0,0,0);">Component</h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-<form action="{{route('Product.store')}}" method="post" enctype="multipart/form-data">   
+<form action="{{route('Product.store')}}" method="post" enctype="multipart/form-data">
  @csrf
-    
+
     <div class="form-group mb-3">
     <label class="form-label">Brand:</label>
     <input class="form-control" type="text" id="fieldNameDashboard" name="Brand" required>
@@ -120,7 +120,7 @@
     <select name="id_Exhibtion">
         @foreach($adminex as $exhibtioins)
         <option name="id_Exhibtion" href="{{route('Product.index', ['id' => $exhibtioins->id])}}">{{$exhibtioins->id}}.{{ $exhibtioins->Exhibition_Name }}</option>
-        @endforeach 
+        @endforeach
     </select>
     <br>
     <section id="Exhibition_Name" >
@@ -133,10 +133,10 @@
    </section>
    <br>
     <input type="submit" value="Submit">
-                                           
+
 </form>
 </div>
-                                                
+
  </div>
   <div class="modal-footer">
    <button class="btn btn-light" id="btnModelCloseAddDashboard" type="button" data-bs-dismiss="modal">Close</button>
@@ -149,8 +149,8 @@
                         </div>
                     </nav>
                     <div class="col-auto col-md-8 offset-md-2" style="width: 85%;margin: 0px 5%;">
-                        <h1 class="text-center" style="color: rgb(255,255,255);">Chevrolet Section</h1>
-                            
+                        <h1 class="text-center" style="color: rgb(255,255,255);">ِ{{ $merch->Company_Name }}</h1>
+
                         @foreach($products as $product)
                         <section id="container" class="row m-3" style="width: 96%;">
                             <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-3" style="padding: 0px;margin: 0px 5px;width: 336.8px;">

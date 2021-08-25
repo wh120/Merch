@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Merch;
 use App\Product;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
 class ProductController extends Controller
@@ -20,11 +22,14 @@ class ProductController extends Controller
 
         $categories = DB::select('select * from categories ');
 
-         
 
-        $products = Product::all();
+        if(Auth::check() == false)
+            return view('login');
 
-        return view('Products.index',compact('products'),['adminex'=>$adminex, 'categories'=>$categories, 'products'=>$products]);
+        $merch = Merch::where('Email' , Auth::user()->email )->first();
+        $products = Product::where('merch_id' , $merch->id)->get();
+
+        return view('Products.index',compact('products'),['adminex'=>$adminex, 'categories'=>$categories, 'products'=>$products  , 'merch'=>$merch]);
     }
 
     /**
@@ -49,7 +54,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        
+
+
         $request -> validate([
 
         "Brand"=>"required:products,Brand",
@@ -61,7 +67,10 @@ class ProductController extends Controller
         "id_Exhibtion"=>"required:products,id_Exhibtion",
 
         ]);
-        Product::create($request->all());
+        $data = $request->all();
+        $data['merch_id'] = Merch::where('Email' , Auth::user()->email)->first()->id;
+
+        Product::create($data);
         session()->flash('success',__('success'));
         return redirect()->route('Product.index');
     }

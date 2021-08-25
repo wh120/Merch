@@ -34,10 +34,10 @@ Route::resource('Merch','MerchController' );
 //Route::get('/home', 'MerchController@index')->name('home');
 
 Route::get('/home', function () {
-	if(!Auth::user()->isAdmin)
-    return redirect()->route('Merch.index');
-    else
-    return redirect()->route('Product.index');
+
+	if(Auth::user()->isAdmin)
+        return redirect()->route('Merch.index');
+	else  return redirect()->route('Product.index');
 
 });
 

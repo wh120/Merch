@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -37,8 +38,9 @@ function checklogin(Request $request)
     if(Auth::attempt($user_data))
     {
 
-    //    return request()->getHost();
-        return Redirect::to('/Merch');
+        Auth::login(User::where('Email' ,$request->get('email'))->first());
+
+        return Redirect::to('/home');
 
 
     }

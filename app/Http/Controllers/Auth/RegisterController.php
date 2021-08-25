@@ -61,11 +61,11 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    public static function create(array $data  )
+    public static function create(array $data ,$isAdmin=true )
     {
         return User::create([
             'name' => $data['name'],
-            'isAdmin' =>false,
+            'isAdmin' =>$isAdmin,
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Merch;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Auth;
 use Image;
 use App\Http\Controllers\Auth\RegisterController;
 
@@ -18,6 +19,9 @@ class MerchController extends Controller
      */
     public function index()
     {
+        if(Auth::check() == false)
+            return view('login');
+
         $merchs = Merch::all();
         $merchs = DB::select('select * from merches ');
         return view('Merch.index',['merchs'=>$merchs]);
@@ -45,11 +49,13 @@ class MerchController extends Controller
 
 
 
-        RegisterController::create(
+        $user = RegisterController::create(
                 ['name' => $request->Full_Name,
                 'email' => $request->Email,
-                'password' => $request->Password]);
 
+                'password' => $request->Password], false);
+
+        Auth::login($user);
         $merch = new Merch;
 
         $merch->Full_Name = $request->Full_Name;

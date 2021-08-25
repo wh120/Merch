@@ -15,13 +15,17 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
-            $table->String('Brand'); 
+            $table->String('Brand');
             $table->String('Model');
             $table->String('Price');
             $table->String('Warranty');
             $table->String('Description');
             $table->String('id_categorie');
             $table->String('id_Exhibtion');
+            $table->unsignedInteger('merch_id');
+            $table->foreign('merch_id')
+                ->references('id')->on('merches')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
